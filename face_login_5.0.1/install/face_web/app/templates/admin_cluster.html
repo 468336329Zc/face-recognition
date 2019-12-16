@@ -1,0 +1,199 @@
+<html><head>
+	<title>日人流量汇总</title>
+	</head>
+<body>
+	<script src="/static/js/jquery.min.js"></script>
+	<link href="/static/css/bootstrap-theme.css" rel="stylesheet">
+	<link href="/static/css/bootstrap.css" rel="stylesheet">
+	<script src="/static/js/bootstrap.js"></script>
+	<div class="container">
+			<div class="row clearfix">
+				<div class="col-md-12 column">
+						<nav class="navbar navbar-default" role="navigation">
+								<div class="navbar-header">
+									 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button> <a class="navbar-brand" href="{{ url_for('index') }}">CQUPT Hub签到平台</a>
+								</div>
+								
+								<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+									<ul class="nav navbar-nav">
+										<li class="active">
+											<a href="#">日人流量汇总</a>
+										</li>
+									</ul>
+									<form method="GET" action="{{ url_for('admin_cluster') }}" class="navbar-form navbar-left" role="search">
+										<div class="form-group">
+											<input type="date" name="date" class="form-control" />
+										</div> <button type="submit" class="btn btn-default">按日期搜索</button>
+									</form>
+									<ul class="nav navbar-nav navbar-right">
+										<li class="dropdown">
+											<a href="#" class="dropdown-toggle" data-toggle="dropdown">功能栏<strong class="caret"></strong></a>
+										   <ul class="dropdown-menu">
+											   <li>
+													   <a href="{{ url_for('index') }}">首页</a>
+											   </li>
+											   <li>
+													   <a href="{{ url_for('admin') }}">管理员首页</a>
+											   </li>
+											   <li>
+												   <a href="{{ url_for('admin_stream') }}">日人流量监控平台</a>
+											   </li>
+											   <li>
+													<a href="{{ url_for('admin_cluster') }}">日人流量汇总</a>
+											   </li>
+											   <li class="divider">
+											   </li>
+											   <li>
+													<a href="{{ url_for('status') }}">近7日签到趋势图</a>
+												</li>
+											   <li>
+													   <a href="{{ url_for('logout') }}">登出</a>
+											   </li>
+										   </ul>
+									   </li>
+									</ul>
+								</div>
+								
+							</nav>
+					{% if current_user.is_authenticated %}
+					<div class="row clearfix">
+						<div class="col-md-6 column">
+							<div class="row clearfix">
+								<div class="col-md-4 column">
+								</div>
+								<div class="col-md-4 column">
+								</div>
+								<div class="col-md-4 column">
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6 column">
+							<div class="row clearfix">
+								<div class="col-md-4 column">
+								</div>
+								<div class="col-md-4 column">
+									<h3>
+										日人流量汇总
+									</h3>
+								</div>
+								<div class="col-md-4 column">
+								</div>
+							</div>
+						</div>
+					</div>
+					<h3>{{ myData.date }}的人流量:{{ myData.count }}</h3>
+					<table class="table">
+							<thead>
+								<tr>
+									<th>
+										头像
+									</th>
+									<th>
+										用户名
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for i in myData.info %}
+								<tr class="info">
+									<td>
+										<img alt="90x90" height="90" width="90" src="data:image/jpg;base64,{{i.face64}}" />
+									</td>
+									<td>
+										{{ i.name }}
+									</td>
+								</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+				</div>
+			</div>
+		</div>
+{% endif %}
+<video hidden id="video" width="500px" height="500px" autoplay="autoplay"></video>
+<canvas hidden id="canvas" width="500px" height="500px"></canvas>
+<script>
+		function getMedia() {
+			let constraints = {
+				video: {width: 500, height: 500},
+				audio: false
+			};
+			//获得video摄像头区域
+			let video = document.getElementById("video");
+			//这里介绍新的方法，返回一个 Promise对象
+			// 这个Promise对象返回成功后的回调函数带一个 MediaStream 对象作为其参数
+			// then()是Promise对象里的方法
+			// then()方法是异步执行，当then()前的方法执行完后再执行then()内部的程序
+			// 避免数据没有获取到
+			let promise = navigator.mediaDevices.getUserMedia(constraints);
+			promise.then(function (MediaStream) {
+				video.srcObject = MediaStream;
+				video.play();
+			});
+		}
+	
+		function takePhoto() {
+		//获得Canvas对象
+		let video = document.getElementById("video");
+		let canvas = document.getElementById("canvas");
+		let ctx = canvas.getContext('2d');
+		ctx.drawImage(video, 0, 0, 500, 500);
+		}
+	
+		function register(){
+		let video = document.getElementById("video");
+		let canvas = document.getElementById("canvas");
+		let ctx = canvas.getContext('2d');
+		ctx.drawImage(video, 0, 0, 500, 500);
+		//var username = document.getElementById("username").value;
+		//var password = document.getElementById("password").value;
+		var dataURL = canvas.toDataURL("image/jpeg");
+		dataURL = dataURL.replace("data:image/jpeg;base64,", "");
+		$.ajax( {
+			url:"{{ url_for('api') }}",
+			type: "POST",
+			data: {"faceid":dataURL,"api":"flag"},
+			dataType: "json",
+			//processData:false,
+			//contentType: false,
+	
+			success: function(data){
+				if (data.status == "1"){
+					alert("签到成功!");
+					window.location.href="{{ url_for('index') }}";
+				}else if(data.status == "-1"){
+					alert("请打开摄像头并将脸放于视频中间！");
+				}else if(data.status == "-2"){
+					alert("你今天已经签过到了!");
+				}
+			},
+			error: function(){
+				// do something
+			}
+		});
+		}
+
+		function inspect(abid,op){
+		$.ajax( {
+			url:"{{ url_for('api') }}",
+			type: "POST",
+			data: {"abid":abid,"op":op,"api":"absent_inspect"},
+			dataType: "json",
+			//processData:false,
+			//contentType: false,
+	
+			success: function(data){
+				if (data.status == "1"){
+					window.location.href="{{ url_for('admin') }}";
+				}else if(data.status == "-1"){
+					alert("没有权限进行此操作！");
+				}
+			},
+			error: function(){
+				alert("网络连接错误!");
+			}
+		});
+		}
+	
+	</script>
+</body>

@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<title>Login</title>
+        <meta charset="utf-8">
+        <script src="/static/js/jquery.min.js"></script>
+        <link href="/static/css/bootstrap-theme.css" rel="stylesheet">
+        <link href="/static/css/bootstrap.css" rel="stylesheet">
+        <script src="/static/js/bootstrap.js"></script>
+	</head>
+<body>
+
+<div class="container">
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+                    <div class="alert alert-dismissable alert-info">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                           <h4>
+                               注意!
+                           </h4> <strong>info:</strong> 登录前请先打开摄像头并保证清晰可见的人脸出现在视频里! <a href="#" onclick="getMedia()" class="alert-link">点我启动摄像头</a>
+                       </div>
+                <form role="form">
+                    <button type="button" onclick="getMedia()" class="btn btn-default btn-danger">点我启动摄像头</button>
+                    <button type="button" onclick="register()" class="btn btn-default btn-info">人脸识别登录</button>
+                    <a href="{{ url_for('regist') }}"><button type="button" onclick="register()" class="btn btn-default btn-info">注册</button></a>
+                    <a href="{{ url_for('loginNoface') }}"><button type="button" onclick="register()" class="btn btn-default btn-info">仅使用用户密码登录</button></a>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+            <div class="row clearfix">
+                <div class="col-md-12 column">
+                    <div class="row clearfix">
+                        <div class="col-md-5 column">
+                        </div>
+                        <div class="col-md-2 column">
+                                <video id="video" width="500px" height="500px" autoplay="autoplay"></video>
+                        </div>
+                        <div class="col-md-5 column">
+                                <canvas hidden id="canvas" width="500px" height="500px"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+<script>
+    function getMedia() {
+        let constraints = {
+            video: {width: 500, height: 500},
+            audio: false
+        };
+        //获得video摄像头区域
+        let video = document.getElementById("video");
+        //这里介绍新的方法，返回一个 Promise对象
+        // 这个Promise对象返回成功后的回调函数带一个 MediaStream 对象作为其参数
+        // then()是Promise对象里的方法
+        // then()方法是异步执行，当then()前的方法执行完后再执行then()内部的程序
+        // 避免数据没有获取到
+        let promise = navigator.mediaDevices.getUserMedia(constraints);
+        promise.then(function (MediaStream) {
+            video.srcObject = MediaStream;
+            video.play();
+        });
+    }
+
+    function takePhoto() {
+    //获得Canvas对象
+    let video = document.getElementById("video");
+    let canvas = document.getElementById("canvas");
+    let ctx = canvas.getContext('2d');
+    ctx.drawImage(video, 0, 0, 500, 500);
+    }
+
+    function register(){
+    let video = document.getElementById("video");
+    let canvas = document.getElementById("canvas");
+    let ctx = canvas.getContext('2d');
+    ctx.drawImage(video, 0, 0, 500, 500);
+    //var username = document.getElementById("username").value;
+    //var password = document.getElementById("password").value;
+    var dataURL = canvas.toDataURL("image/jpeg");
+    dataURL = dataURL.replace("data:image/jpeg;base64,", "");
+    $.ajax( {
+        url:"{{ url_for('api') }}",
+        type: "POST",
+        data: {"faceid":dataURL,"api":"login"},
+        dataType: "json",
+        //processData:false,
+        //contentType: false,
+
+        success: function(data){
+            if (data.status == "1"){
+                window.location.href="{{ url_for('index') }}";
+            }else if(data.status == "-1"){
+                alert("请打开摄像头并将脸放于视频中间！");
+            }else if(data.status == "0"){
+                window.location.href="{{ url_for('login2') }}";
+            }
+        },
+        error: function(){
+            // do something
+        }
+    });
+    }
+
+</script>
+</body>
+</html>

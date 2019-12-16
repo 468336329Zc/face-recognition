@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>欢迎来到CQUPT Hub</title>
+
+    <meta name="description" content="Source code generated using layoutit.com">
+    <meta name="author" content="LayoutIt!">
+
+    <link href="/static/new/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/new/css/style.css" rel="stylesheet">
+
+  </head>
+  <body>
+
+    <div class="container-fluid">
+	<div class="row">
+		<div class="col-md-12">
+			<nav class="navbar navbar-expand-lg navbar-light bg-light navbar-dark bg-dark fixed-top">
+				 
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+					<span class="navbar-toggler-icon"></span>
+				</button> <a class="navbar-brand" href="{{ url_for('index') }}">CQUPT_HUB</a>
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<ul class="navbar-nav">
+						<li class="nav-item active">
+							 <a class="nav-link" href="#">关于 <span class="sr-only">(current)</span></a>
+						</li>
+					<ul class="navbar-nav ml-md-auto">
+						<li class="nav-item dropdown">
+							 <a class="nav-link dropdown-toggle" href="" id="navbarDropdownMenuLink" data-toggle="dropdown">功能栏</a>
+							<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+								 <a class="dropdown-item" href="{{ url_for('index') }}">首页</a> 
+								 <a class="dropdown-item" href="{{ url_for('admin') }}">管理员界面</a> 
+								<div class="dropdown-divider"></div> 
+								<a class="dropdown-item" href="{{ url_for('status') }}">近7日签到趋势图</a>
+								<a class="dropdown-item" href="{{ url_for('logout') }}">登出</a>
+								<a class="dropdown-item" href="{{ url_for('about') }}">关于</a>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</nav>
+		</div>
+	</div>
+</div>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="row">
+				<div class="col-md-12">
+					<br><br><br>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="container-fluid">
+		<div class="row">
+				<div class="col-md-12">
+					<center>
+					<img alt="100x100" height="100" width="100"  src="/static/img/about1.jpg" class="rounded-circle" />
+					</center>
+					<div class="row">
+						<div class="col-md-12">
+							<h3 class="text-center">
+								大家笑一笑就好
+							</h3>
+							<br>
+							<h3 class="text-center">
+								NM$L
+							</h3>
+						</div>
+					</div>
+				</div>
+			</div>
+		<br>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="tabbable" id="tabs-437860">
+					<ul class="nav nav-tabs">
+						<li class="nav-item">
+							<a class="nav-link active" href="#tab1" data-toggle="tab">抽象圣经1.0</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="#tab2" data-toggle="tab">抽象圣经2.0</a>
+						</li>
+					</ul>
+					<div class="tab-content">
+						<div class="tab-pane active" id="tab1">
+							<center>
+								<video src="/static/video/1.mp4" controls="controls">
+									您的浏览器不支持 video 标签。
+								</video>
+							</center>
+						</div>
+						<div class="tab-pane" id="tab2">
+							<center>
+								<video src="/static/video/2.mp4" controls="controls">
+									您的浏览器不支持 video 标签。
+								</video>
+							</center>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<h3>
+					更新日志:5.1.4.1
+				</h3>
+				<ul>
+					<li class="list-item">
+						日语版界面开坑
+					</li>
+					<li class="list-item">
+						登录界面添加日语版本
+					</li>
+					<li class="list-item">
+						优化主页性能
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<h3>
+					更新日志:5.1.3
+				</h3>
+				<ul>
+					<li class="list-item">
+						紧急更换了中科院人脸数据，更适应亚洲人脸(<strong>更换模型</strong>(×),<strong>认亲</strong>(√))
+					</li>
+					<li class="list-item">
+						优化多线程，并发能力++
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<h3>
+					更新日志:5.1.2
+				</h3>
+				<ul>
+					<li class="list-item">
+						增加全局通知
+					</li>
+					<li class="list-item">
+						增加加载页面(故意拖慢你们的登录速度)（笑）
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<h3>
+					更新日志:5.1.1
+				</h3>
+				<ul>
+					<li class="list-item">
+						BUG修复
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<h3>
+					更新日志:5.1.0
+				</h3>
+				<ul>
+					<li class="list-item">
+						周报系统上线
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<h3>
+					更新日志:5.0.3
+				</h3>
+				<ul>
+					<li class="list-item">
+						添加新功能：守夜冠军
+					</li>
+					<li class="list-item">
+						添加新页面：我
+					</li>
+					<li class="list-item">
+						优化主页性能，将图表请求数据改为异步处理
+					</li>
+					<li class="list-item">
+						恢复视频框
+					</li>
+					<li class="list-item">
+						下一版本将上线周报系统以及多个可视化图
+					</li>
+					<li class="list-item">
+						即将添加聊天室(无期限拖更)
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<h3>
+					更新日志:5.0.2
+				</h3>
+				<ul>
+					<li class="list-item">
+						更新UI,简化人脸识别流程
+					</li>
+					<li class="list-item">
+						下一版本将上线周报系统以及多个可视化图
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<h3>
+					更新日志:5.0.1
+				</h3>
+				<ul>
+					<li class="list-item">
+						修复各种BUG
+					</li>
+					<li class="list-item">
+						UI更新，并整合多个网页
+					</li>
+					<li class="list-item">
+						个人页面增加可视化分析
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+<script src="/static/new/js/jquery.min.js"></script>
+<script src="/static/new/js/bootstrap.min.js"></script>
+<script src="/static/new/js/scripts.js"></script>
+</body>
+</html>

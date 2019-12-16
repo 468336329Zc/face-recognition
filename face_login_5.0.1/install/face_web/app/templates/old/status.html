@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+   <head>
+       <title>近7日签到趋势</title>
+       <meta charset="utf-8">
+   </head>
+   <body style="height: 100%; margin: 0">
+       <div id="container" style="height: 100%"></div>
+       <script type="text/javascript" src="/static/js/echarts.min.js"></script>
+       <script type="text/javascript">
+var dom = document.getElementById("container");
+var myChart = echarts.init(dom);
+var app = {};
+option = null;
+option = {
+    xAxis: {
+        type: 'category',
+        data: [
+            {% for i in myData.title %}
+            "{{ i }}",
+            {% endfor %}
+        ]
+    },
+    yAxis: {
+        type: 'value'
+    },
+    series: [{
+        data: [
+            {% for i in myData.count %}
+            {{ i }},
+            {% endfor %}
+        ],
+        type: 'line',
+        smooth: true
+    }]
+};
+;
+if (option && typeof option === "object") {
+    myChart.setOption(option, true);
+}
+       </script>
+   </body>
+</html>

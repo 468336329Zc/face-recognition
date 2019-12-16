@@ -1,0 +1,85 @@
+<html><head>
+	<title>表单生成</title>
+	</head>
+<body>
+	<script src="/static/js/jquery.min.js"></script>
+	<link href="/static/css/bootstrap-theme.css" rel="stylesheet">
+	<link href="/static/css/bootstrap.css" rel="stylesheet">
+	<script src="/static/js/bootstrap.js"></script>
+	<div class="container">
+			<div class="row clearfix">
+				<div class="col-md-12 column">
+						<nav class="navbar navbar-default" role="navigation">
+								<div class="navbar-header">
+									 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button> <a class="navbar-brand" href="{{ url_for('index') }}">CQUPT Hub签到平台</a>
+								</div>
+								
+								<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+									<ul class="nav navbar-nav">
+										<li class="active">
+											 <a href="#">表单生成</a>
+										</li>
+									</ul>
+									<ul class="nav navbar-nav navbar-right">
+										<li class="dropdown">
+											 <a href="#" class="dropdown-toggle" data-toggle="dropdown">功能栏<strong class="caret"></strong></a>
+											<ul class="dropdown-menu">
+												<li>
+														<a href="{{ url_for('index') }}">首页</a>
+												</li>
+												<li>
+														<a href="{{ url_for('admin') }}">管理员首页</a>
+												</li>
+												<li>
+													<a href="{{ url_for('admin_stream') }}">日人流量监控平台</a>
+												</li>
+												<li>
+													<a href="{{ url_for('admin_stream') }}">日人流量汇总</a>
+												</li>
+												<li class="divider">
+												</li>
+												<li>
+														<a href="{{ url_for('logout') }}">登出</a>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</div>
+								
+							</nav>
+							表格生成情况:{{ myData.status }}
+							<table class="table">
+									<thead>
+										<tr>
+											<th>
+												姓名
+											</th>
+											{% for i in myData.data.title %}
+											<th>
+												{{ i }}
+											</th>
+											{% endfor %}
+										</tr>
+									</thead>
+									<tbody>
+										{% for i in myData.data.info.keys() %}
+										<tr class="info">
+											<td>
+												{{ i }}
+											</td>
+											{% for j in myData.data.info[i] %}
+											{% if j.status == '已签到' %}
+											<td>
+												{{ j.time }}
+											</td>
+											{% else %}
+											<td>
+												{{ j.status }}
+											</td>
+											{% endif %}
+											{% endfor %}
+										</tr>
+										{% endfor %}
+									</tbody>
+								</table>
+</body>

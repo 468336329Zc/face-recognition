@@ -1,0 +1,8 @@
+numpy==1.16.2
+scipy==1.2.1
+facenet==1.0.3
+networkx==1.11
+flask==1.0.3
+flask_login==0.4.1
+flask_sqlalchemy==2.4.0
+pymysql==0.9.3
